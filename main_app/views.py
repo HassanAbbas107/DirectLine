@@ -57,4 +57,34 @@ class CallDelete(DeleteView):
 
 class MessageCreateView(CreateView):
     
-    pass
+    model = Message
+    template_name="Messages/message_form.html"
+    form_class=MessageForm
+    success_url = reverse_lazy("call_list")
+
+
+class MessageListView(ListView):
+    model=Message
+    template_name="Messages/message_list.html"
+    context_object_name='message'
+    
+class MessageDetailView(DetailView):
+    model = Message
+    template_name="Messages/message_details.html"
+    context_object_name='message'
+    pk_url_kwarg = 'message_id'
+    
+    
+class MessageDeleteView(DeleteView):
+    model=Message
+    template_name = "authors/author_confirm_delete.html"
+    success_url = reverse_lazy("call_list")
+
+
+class MessageUpdateView(UpdateView):
+    model = Message
+    template_name='Messages/message-form.html'
+    form_class = MessageForm
+    success_url="call_list"
+    pk_url_kwarg = 'message_id'
+    
