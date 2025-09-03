@@ -69,22 +69,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DirectLain.wsgi.application'
 
+import os
+from dotenv import load_dotenv
 
+load_dotenv(BASE_DIR / '.env')
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DirectLin'),  # same name as your .env file
+        'NAME': 'DirectLin',  # same name as your .env file
         'USER': 'postgres',
-        'PASSWORD': 'Ali14788',
+        'PASSWORD': os.getenv('Pass'),
         'HOST': 'localhost',  
         'PORT': '5432',
     }
 }
+AUTH_USER_MODEL = "main_app.User"
 
 
+
+LOGIN_REDIRECT_URL = "author_list"       # after successful login
+LOGOUT_REDIRECT_URL = "login"     # after logout
 
 
 # Password validation
@@ -129,8 +136,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-import os
-from dotenv import load_dotenv
+
 
 
 
