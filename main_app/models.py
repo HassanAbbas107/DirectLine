@@ -23,7 +23,8 @@ class Call(models.Model):
         SOLVED = "solved", "Solved"
         WORKING = "working", "Working on it"
         PROBLEM = "problem", "Problem"
-    
+    building=models.CharField(max_length=20, null=True)
+    lab=models.CharField(max_length=20, null=True)
     created_date = models.DateField(auto_now_add=True)
     description = models.CharField(max_length=9999)
     status = models.CharField(  
