@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}App{% endblock %}</title>
 </head>
 <body>
-    <div>
-        <a href="{% url 'call_list' %}">All calls</a>
-        <hr>
-        {% if user.is_authenticated and user.role == user.Role.ADMIN %}
-        <a href="{% url 'message_list' %}">Admin Comments</a>
-        {% endif %}
-         <div>
-            <a href="{% url 'signup' %}">Sign Up</a>
-        </div>
+  <div>
+    <a href="{% url 'call_list' %}">All calls</a>
+    <hr />
 
-        
-    <div >
-        {% block content %}
-        {% endblock %}
+    {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+      <a href="{% url 'messages_list' %}">Admin Comments</a>
+    {% endif %}
+
+    <div>
+      {% if user.is_authenticated %}
+        <span>Hi, {{ user.username }}</span>
+        <a href="{% url 'logout' %}">Log out</a>
+      {% else %}
+        <a href="{% url 'login' %}">Log in</a>
+        <a href="{% url 'signup' %}">Sign Up</a>
+      {% endif %}
     </div>
+
+    <div>
+      {% block content %}{% endblock %}
     </div>
+  </div>
 </body>
 </html>
