@@ -2,27 +2,27 @@
 {% block content %}
 
 <h2>Call Information</h2>
-<h1>Call {{ call.id }} Details</h1>
-<p>Created By: {{ call.user.username }}</p>
-<p>Created date: {{ call.created_date }}</p>
-<p>Building: {{ call.building }}</p>
-<p>Lab: {{ call.lab }}</p>
-<p>Description: {{ call.description }}</p>
-<p>Status: {{ call.status }}</p>
+<h1>Call {{ Call.id }} Details</h1>
+<p>Created By: {{ Call.user.username }}</p>
+<p>Created date: {{ Call.created_date }}</p>
+<p>Building: {{ Call.building }}</p>
+<p>Lab: {{ Call.lab }}</p>
+<p>Description: {{ Call.description }}</p>
+<p>Status: {{ Call.status }}</p>
 
 {% if user.is_authenticated and user.role == 'ADMIN' %}
     <form method="post" action="{% url 'call_status_update' call.pk %}">
         {% csrf_token %}
         <select name="status">
-            <option value="problem" {% if call.status == 'problem' %}selected{% endif %}>Problem</option>
-            <option value="working" {% if call.status == 'working' %}selected{% endif %}>Working on it</option>
-            <option value="solved" {% if call.status == 'solved' %}selected{% endif %}>Solved</option>
+            <option value="problem" {% if Call.status == 'problem' %}selected{% endif %}>Problem</option>
+            <option value="working" {% if Call.status == 'working' %}selected{% endif %}>Working on it</option>
+            <option value="solved" {% if Call.status == 'solved' %}selected{% endif %}>Solved</option>
         </select>
         <button type="submit">Update Status</button>
     </form>
     <form method="post" action="{% url 'message_create' %}">
         {% csrf_token %}
-        <input type="hidden" name="call" value="{{ call.pk }}">
+        <input type="hidden" name="Call" value="{{ Call.pk }}">
         <textarea name="description" placeholder="Enter your comment"></textarea>
         <button type="submit">Submit Comment</button>
     </form>

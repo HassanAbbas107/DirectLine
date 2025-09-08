@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 import requests
 from .forms import CallForm,MessageForm
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -23,6 +24,8 @@ class CallCreateView(CreateView):
     model=Call
     form_class=CallForm
     template_name = "Calls/call_form.html"
+    
+
     
     def get_success_url(self):
         return reverse('call_detail',kwargs={'call_id':self.object.pk})
@@ -87,4 +90,3 @@ class MessageUpdateView(UpdateView):
     form_class = MessageForm
     success_url="call_list"
     pk_url_kwarg = 'message_id'
-    

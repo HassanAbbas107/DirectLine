@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    {% for message in messages %}
+        <h3>Comment {{ message.id }}</h3>
+                    <p>Call:</strong> <a href="{% url 'call_detail' message.call.pk %}">Call #{{ message.call.id }}</a> ({{ message.call.status }})</p>
+        <p>Admin:</strong> {{ message.user.username }}</p>
+        <p>Date:</strong> {{ message.created_date }}</p>
+        <p>Comment:</strong> {{ message.description}}</p>
+          {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+        <p>
+            <a href="{% url 'message_detail' message.pk %}">View Details</a> 
+            <a href="{% url 'message_update' message.pk %}">Edit</a> 
+            <a href="{% url 'message_delete' message.pk %}">Delete</a>
+        </p>
+        {% endif %}
+        {% endfor %}

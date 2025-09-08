@@ -16,5 +16,5 @@ path("messages/<int:message_id>/",views.MessageDetailView.as_view(),name="messag
 path("messages/<int:message_id>/update/",views.MessageUpdateView.as_view(),name="message_create"),
 path("messages/<int:pk>/delete/",views.MessageDeleteView.as_view(),name="message_delete"),
 path("auth/signup",views.SignUpView.as_view(), name="signup"),
-
+ 
 ]

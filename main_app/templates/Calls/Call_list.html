@@ -2,20 +2,19 @@
 {% block content %}
 <a href="{% url 'call_create' %}">Create New Call</a>
 
-
-{% for call in calls %}
-
-        <h3>Call #{{ call.id }} - {{ call.get_status_display }}</h3>
-        <p>Building: {{ call.building }}</p>
-        <p>Lab: {{ call.lab }}</p>
-        <p>Description: {{ call.description|truncatewords:20 }}</p>
-        <p>Created: {{ call.created_date }} by {{ call.user.username }}</p>
-        
-        <p>
-            <a href="{% url 'call_detail' call.pk %}">View Details</a>
-            {% if call.user == user or user.role == user.Role.ADMIN %}
-         <a href="{% url 'call_delete' call.pk %}">Delete</a>
-            {% endif %}
-        </p>
+{% for call in Call %}
+    <h3>Call #{{ call.id }} - {{ call.get_status_display }}</h3>
+    <p>Building: {{ call.building }}</p>
+    <p>Lab: {{ call.lab }}</p>
+    <p>Description: {{ call.description }}</p>
+    <p>Created: {{ call.created_date }} by {{ call.user.username }}</p>
     
+    <p>
+        <a href="{% url 'call_detail' call.pk %}">View Details</a>
+        {% if call.user == user or user.role == user.Role.ADMIN %}
+            <a href="{% url 'call_delete' call.pk %}">Delete</a>
+        {% endif %}
+    </p>
+{% endfor %}
+
 {% endblock %}
