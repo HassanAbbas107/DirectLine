@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <a href="{% url 'call_list' %}">All calls</a>
+        <a href="{% url 'call_create' %}">Create Call</a>
+        {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+        <a href="{% url 'message_list' %}">Admin Comments</a>
+
+
+
+
+    </div>
+</body>
+</html>
