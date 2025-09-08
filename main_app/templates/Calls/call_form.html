@@ -6,6 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+     
+     <h1> Create Call for the It tech team </h1>
+     <form method='post'>
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button>Create Call</button>
+    </form>
+
     
+
 </body>
 </html>
