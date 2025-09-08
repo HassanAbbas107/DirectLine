@@ -9,7 +9,7 @@ path("Calls/<int:pk>/delete/",views.CallDelete.as_view(),name='call_delete'),
 path("Calls/<int:call_id>/",views.CallDetailView.as_view(),name="call_detail"),
 
 
-
+# Messages url  
 path("Messages/new/",views.MessageCreateView.as_view(),name="message_create"),
 path("Messages/",views.MessageListView.as_view(),name="messages_list"),
 path("Messages/<int:message_id>/",views.MessageDetailView.as_view(),name="message_details"),
