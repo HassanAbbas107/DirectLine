@@ -14,7 +14,7 @@
         <p>
             <a href="{% url 'call_detail' call.pk %}">View Details</a>
             {% if call.user == user or user.role == user.Role.ADMIN %}
-            | <a href="{% url 'call_delete' call.pk %}">Delete</a>
+         <a href="{% url 'call_delete' call.pk %}">Delete</a>
             {% endif %}
         </p>
     
