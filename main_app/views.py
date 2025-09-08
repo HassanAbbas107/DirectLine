@@ -28,7 +28,7 @@ class CallCreateView(CreateView):
         return reverse('call_detail',kwargs={'call_id':self.object.pk})
     
     
-class CallsListView(LoginRequiredMixin,ListView):
+class CallsListView(ListView):
     model=Call
     template_name = "Calls/call_list.html"
     context_object_name = "Call"    

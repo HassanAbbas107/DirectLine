@@ -3,9 +3,9 @@ from . import views
 
 
 urlpatterns = [
-path("Calls/",views.CallsListView.as_view(),name="call_list"),
-path("Calls/new/",views.CallCreateView.as_view(),name="call_create"),
-path("Calls/<int:pk>/delete/",views.CallDelete.as_view(),name='call_delete'),
+path("calls/",views.CallsListView.as_view(),name="call_list"),
+path("calls/new/",views.CallCreateView.as_view(),name="call_create"),
+path("calls/<int:pk>/delete/",views.CallDelete.as_view(),name='call_delete'),
 path("Calls/<int:call_id>/",views.CallDetailView.as_view(),name="call_detail"),
 
 
