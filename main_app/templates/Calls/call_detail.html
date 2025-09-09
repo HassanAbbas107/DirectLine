@@ -10,22 +10,36 @@
 <p>Description: {{ Call.description }}</p>
 <p>Status: {{ Call.status }}</p>
 
-{% if user.is_authenticated and user.role == 'ADMIN' %}
-    <form method="post" action="{% url 'call_status_update' call.pk %}">
+{% if user.is_authenticated and user.role == user.Role.ADMIN %}
+    <h3>Admin Controls</h3>
+    
+
+    
+    <form method="post" action="{% url 'message_create' pk=Call.id %}">
         {% csrf_token %}
-        <select name="status">
+         <select name="status" >
             <option value="problem" {% if Call.status == 'problem' %}selected{% endif %}>Problem</option>
             <option value="working" {% if Call.status == 'working' %}selected{% endif %}>Working on it</option>
             <option value="solved" {% if Call.status == 'solved' %}selected{% endif %}>Solved</option>
         </select>
-        <button type="submit">Update Status</button>
-    </form>
-    <form method="post" action="{% url 'message_create' %}">
-        {% csrf_token %}
-        <input type="hidden" name="Call" value="{{ Call.pk }}">
-        <textarea name="description" placeholder="Enter your comment"></textarea>
+        {% comment %} <button type="submit">Update Status</button> {% endcomment %}
+        <input type="hidden" name="call" value="{{ Call.pk }}">
+        <textarea name="description" placeholder="Enter your comment" required></textarea>
         <button type="submit">Submit Comment</button>
     </form>
+{% endif %}
+
+<h3>Admin Comments</h3>
+{% if messages %}
+    {% for message in messages %}
+    <div>
+        <p>{{ message.user.username }} ({{ message.created_date }}):</p>
+        <p>{{ message.description }}</p>
+        <p>{{Call.status}}</p>
+    </div>
+    <hr>
+    {% endfor %}
+
 {% endif %}
 
 {% endblock %}

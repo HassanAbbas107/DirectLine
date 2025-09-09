@@ -90,7 +90,7 @@ AUTH_USER_MODEL = "main_app.User"
 
 
 
-LOGIN_REDIRECT_URL = "author_list"       # after successful login
+LOGIN_REDIRECT_URL = "call_list"       # after successful login
 LOGOUT_REDIRECT_URL = "login"     # after logout
 
 
