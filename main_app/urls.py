@@ -14,7 +14,7 @@ urlpatterns = [
     path("messages/", views.MessageListView.as_view(), name="messages_list"),
     path("messages/<int:message_id>/update/", views.MessageUpdateView.as_view(), name="message_update"),
     path("messages/<int:pk>/delete/", views.MessageDeleteView.as_view(), name="message_delete"),
-
+    
     # Auth
     path("auth/signup/", views.SignUpView.as_view(), name="signup"),
     path("auth/login/", LoginView.as_view(template_name="registration/login.html"), name="login"),

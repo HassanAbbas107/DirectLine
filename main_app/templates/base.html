@@ -9,15 +9,18 @@
   <div>
     <a href="{% url 'call_list' %}">All calls</a>
     <hr />
-
+{% comment %} 
     {% if user.is_authenticated and user.role == user.Role.ADMIN %}
       <a href="{% url 'messages_list' %}">Admin Comments</a>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     <div>
       {% if user.is_authenticated %}
         <span>Hi, {{ user.username }}</span>
-        <a href="{% url 'logout' %}">Log out</a>
+        <form action="{% url 'logout' %}" method='post'>
+          {% csrf_token %}
+          <button>Logout</button>
+        </form>
       {% else %}
         <a href="{% url 'login' %}">Log in</a>
         <a href="{% url 'signup' %}">Sign Up</a>

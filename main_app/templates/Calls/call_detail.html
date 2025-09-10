@@ -33,11 +33,17 @@
 {% if messages %}
     {% for message in messages %}
     <div>
-        <p>{{ message.user.username }} ({{ message.created_date }}):</p>
+        <p>Created by {{ message.user.username }} at {{ message.created_date }}:</p>
         <p>{{ message.description }}</p>
         <p>{{Call.status}}</p>
     </div>
+    {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+    <p>
+        <a href="{% url 'message_update' message.pk %}">Edit</a> 
+        <a href="{% url 'message_delete' message.pk %}">Delete</a>
+    </p>
     <hr>
+        {% endif %}
     {% endfor %}
 
 {% endif %}

@@ -86,7 +86,7 @@ class MessageDetailView(DetailView):
     
 class MessageDeleteView(DeleteView):
     model=Message
-    template_name = "authors/author_confirm_delete.html"
+    template_name = "Messages/message_delete.html"
     success_url = reverse_lazy("call_list")
 
 
@@ -94,7 +94,7 @@ class MessageUpdateView(UpdateView):
     model = Message
     template_name='Messages/message-form.html'
     form_class = MessageForm
-    success_url="call_list"
+    success_url=reverse_lazy("call_list")
     pk_url_kwarg = 'message_id'
     
     
