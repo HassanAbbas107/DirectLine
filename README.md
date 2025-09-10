@@ -28,8 +28,7 @@ The goal of this project is to create a help desk platform that allows users to 
 - Challenges in relationships between users, calls, and messages.
 
 
-
-- [Hassan](https://github.com/HassanAbbas107)
+ [Hassan](https://github.com/HassanAbbas107)
 
 ## In Conclusion
 
