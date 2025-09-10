@@ -5,18 +5,15 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'call-list.css' %}" />
 {% endblock %}
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
 
 <a href="{% url 'call_create' %}">Create New Call</a>
-
 {% for call in Call %}
-    <h3>Call #{{ call.id }} - {{ call.get_status_display }}</h3>
+<div >
+    <h3>Call #{{ call.id }}</h3>
     <p>Building: {{ call.building }}</p>
     <p>Lab: {{ call.lab }}</p>
     <p>Description: {{ call.description }}</p>
-    <p>Created: {{ call.created_date }} by {{ call.user.username }}</p>
+    <p>Created at: {{ call.created_date }} </p>
     
     <p>
         <a href="{% url 'call_detail' call.pk %}">View Details</a>
@@ -24,6 +21,7 @@
             <a href="{% url 'call_delete' call.pk %}">Delete</a>
         {% endif %}
     </p>
+    </div>
 {% endfor %}
 
 {% endblock %}
