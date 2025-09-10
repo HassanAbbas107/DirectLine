@@ -1,6 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'call-info.css' %}" />
+{% endblock %}
+    <section>
+  <div class="wave">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="content">
+    <h2>Wavy Animation</h2>
+  </div>
+</section>
 <h2>Call Information</h2>
 <h1>Call {{ Call.id }} Details</h1>
 <p>Created By: {{ Call.user.username }}</p>
@@ -9,7 +22,6 @@
 <p>Lab: {{ Call.lab }}</p>
 <p>Description: {{ Call.description }}</p>
 <p>Status: {{ Call.status }}</p>
-
 {% if user.is_authenticated and user.role == user.Role.ADMIN %}
     <h3>Admin Controls</h3>
     

@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{% block title %}App{% endblock %}</title>
-  <style>body {
+body {
     margin: auto;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     overflow: auto;
@@ -72,30 +66,4 @@
     100% {
         transform: translateX(1);
     }
-}</style>
-</head>
-<body>
-  <div>
-    <a href="{% url 'call_list' %}">All calls</a>
-    <hr />
-
-    <div>
-      {% if user.is_authenticated %}
-        <span>Hi, {{ user.username }}</span>
-        <form action="{% url 'logout' %}" method='post'>
-          {% csrf_token %}
-          <button>Logout</button>
-        </form>
-      {% else %}
-        <a href="{% url 'login' %}">Log in</a>
-        <a href="{% url 'signup' %}">Sign Up</a>
-      {% endif %}
-
-    </div>
-
-    <div>
-      {% block content %}{% endblock %}
-    </div>
-  </div>
-</body>
-</html>
+}
