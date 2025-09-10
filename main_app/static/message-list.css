@@ -1,0 +1,33 @@
+
+.container {
+  max-width: 860px;
+  margin: 70px auto;
+  padding: 0 12px;
+  text-align: left;
+}
+
+.message {
+  background: rgba(255,255,255,0.95);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.message h3 {
+  margin: 0 0 8px;
+}
+
+.message p {
+  margin: 4px 0;
+}
+
+.actions a {
+  margin-right: 8px;
+  text-decoration: none;
+  color: #0b5ed7;
+}
+
+.actions a:hover {
+  text-decoration: underline;
+}

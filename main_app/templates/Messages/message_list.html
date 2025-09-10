@@ -1,17 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% for message in messages %}
-        <h3>Comment {{ message.id }}</h3>
-                    <p>Call:</strong> <a href="{% url 'call_detail' message.call.pk %}">Call #{{ message.call.id }}</a> ({{ message.call.status }})</p>
-        <p>Admin:</strong> {{ message.user.username }}</p>
-        <p>Date:</strong> {{ message.created_date }}</p>
-        <p>Comment:</strong> {{ message.description}}</p>
-          {% if user.is_authenticated and user.role == user.Role.ADMIN %}
-        <p>
-            <a href="{% url 'message_detail' message.pk %}">View Details</a> 
-            <a href="{% url 'message_update' message.pk %}">Edit</a> 
-            <a href="{% url 'message_delete' message.pk %}">Delete</a>
-        </p>
-        {% endif %}
-        {% endfor %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'message-list.css' %}">
+{% endblock %}
+
+<div class="container">
+  {% for message in messages %}
+    <div class="message">
+      <h3>Comment {{ message.id }}</h3>
+      <p>Call: <a href="{% url 'call_detail' message.call.pk %}">Call #{{ message.call.id }}</a> ({{ message.call.status }})</p>
+      <p>Admin: {{ message.user.username }}</p>
+      <p>Date: {{ message.created_date }}</p>
+      <p>Comment: {{ message.description }}</p>
+      {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+      <p class="actions">
+        <a href="{% url 'message_detail' message.pk %}">View Details</a>
+        <a href="{% url 'message_update' message.pk %}">Edit</a>
+        <a href="{% url 'message_delete' message.pk %}">Delete</a>
+      </p>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>No comments yet.</p>
+  {% endfor %}
+</div>
 {% endblock %}

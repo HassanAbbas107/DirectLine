@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'message-form.css' %}">
+{% endblock %}
 
-     {% if user.is_authenticated and user.role == user.Role.ADMIN %}
-     <h1> Create Message for the User </h1>
-     <form method='post'>
-        {% csrf_token %}
-        {{form.as_p}}
-
-        <button>Create Message</button>
-    </form>
-
-    
-    {% endif %}
-
+{% if user.is_authenticated and user.role == user.Role.ADMIN %}
+<div class="container">
+  <h1>Create Message for the User</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Create Message</button>
+  </form>
+</div>
+{% endif %}
 {% endblock %}

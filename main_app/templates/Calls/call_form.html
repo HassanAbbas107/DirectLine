@@ -2,19 +2,15 @@
 {% block content %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'call_form.css' %}" />
+<link rel="stylesheet" href="{% static 'call_form.css' %}">
 {% endblock %}
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
-     <h1> Create Call for the It tech team </h1>
-     <form method='post'>
-        {% csrf_token %}
-        {{form.as_p}}
 
-        <button>Create Call</button>
-    </form>
-
-    
-
+<div class="container">
+  <h1>Create Call for the IT tech team</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Create Call</button>
+  </form>
+</div>
 {% endblock %}

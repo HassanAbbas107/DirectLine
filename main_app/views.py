@@ -24,6 +24,11 @@ class CallCreateView(CreateView):
     form_class=CallForm
     template_name = "Calls/call_form.html"
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    
     
     def get_success_url(self):
         return reverse('call_detail',kwargs={'call_id':self.object.pk})

@@ -67,3 +67,38 @@ body {
         transform: translateX(1);
     }
 }
+
+.wrap {
+  max-width: 640px;
+  margin: 80px auto;
+  padding: 0 12px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.wrap h2 {
+  margin: 16px 16px 8px;
+}
+
+.wrap p {
+  margin: 0 16px 16px;
+}
+
+.form-row {
+  margin: 16px;
+}
+
+.btn-danger {
+  padding: 8px 12px;
+  border: 1px solid #d9a1a1;
+  background: #ffe9e9;
+  color: #8b0f0f;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #ffdede;
+}

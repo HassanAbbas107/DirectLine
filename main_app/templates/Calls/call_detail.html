@@ -2,53 +2,59 @@
 {% block content %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'call-info.css' %}" />
+<link rel="stylesheet" href="{% static 'call-info.css' %}">
 {% endblock %}
-    
-<h2>Call Information</h2>
-<h1>Call {{ Call.id }} Details</h1>
-<p>Created By: {{ Call.user.username }}</p>
-<p>Created date: {{ Call.created_date }}</p>
-<p>Building: {{ Call.building }}</p>
-<p>Lab: {{ Call.lab }}</p>
-<p>Description: {{ Call.description }}</p>
-<p>Status: {{ Call.status }}</p>
-{% if user.is_authenticated and user.role == user.Role.ADMIN %}
-    <h3>Admin Controls</h3>
-    
 
-    
-    <form method="post" action="{% url 'message_create' pk=Call.id %}">
-        {% csrf_token %}
-         <select name="status" >
-            <option value="problem" {% if Call.status == 'problem' %}selected{% endif %}>Problem</option>
-            <option value="working" {% if Call.status == 'working' %}selected{% endif %}>Working on it</option>
-            <option value="solved" {% if Call.status == 'solved' %}selected{% endif %}>Solved</option>
-        </select>
-        {% comment %} <button type="submit">Update Status</button> {% endcomment %}
-        <input type="hidden" name="call" value="{{ Call.pk }}">
-        <textarea name="description" placeholder="Enter your comment" required></textarea>
-        <button type="submit">Submit Comment</button>
-    </form>
-{% endif %}
-
-<h3>Admin Comments</h3>
-{% if messages %}
-    {% for message in messages %}
-    <div>
-        <p>Created by {{ message.user.username }} at {{ message.created_date }}:</p>
-        <p>{{ message.description }}</p>
-        <p>{{Call.status}}</p>
+<div class="container">
+  <div class="card">
+    <h2>Call Information</h2>
+    <h1>Call {{ Call.id }} Details</h1>
+    <div class="info">
+      <p>Created By: {{ Call.user.username}}</p>
+      <p>Created date: {{ Call.created_date }}</p>
+      <p>Building: {{ Call.building }}</p>
+      <p>Lab: {{ Call.lab }}</p>
+      <p>Description: {{ Call.description }}</p>
+      <p>Status: {{ Call.status }}</p>
     </div>
-    {% if user.is_authenticated and user.role == user.Role.ADMIN %}
-    <p>
-        <a href="{% url 'message_update' message.pk %}">Edit</a> 
-        <a href="{% url 'message_delete' message.pk %}">Delete</a>
-    </p>
-    <hr>
-        {% endif %}
-    {% endfor %}
+  </div>
 
-{% endif %}
+  {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+  <div class="card">
+    <h3>Admin Message</h3>
+    <form class="admin-form" method="post" action="{% url 'message_create' pk=Call.id %}">
+      {% csrf_token %}
+      <select name="status">
+        <option value="problem" {% if Call.status == 'problem' %}selected{% endif %}>Problem</option>
+        <option value="working" {% if Call.status == 'working' %}selected{% endif %}>Working on it</option>
+        <option value="solved" {% if Call.status == 'solved' %}selected{% endif %}>Solved</option>
+      </select>
+      <input type="hidden" name="call" value="{{ Call.pk }}">
+      <textarea name="description" placeholder="Enter your comment" required></textarea>
+      <button class="btn" type="submit">Submit Comment</button>
+    </form>
+  </div>
+  {% endif %}
 
+  <div class="card comments">
+    <h3>Admin Comments</h3>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="comment">
+          <p>Created by {{ message.user.username }} at {{ message.created_date }}:</p>
+          <p>{{ message.description }}</p>
+          <p>{{ Call.status }}</p>
+          {% if user.is_authenticated and user.role == user.Role.ADMIN %}
+          <p class="actions">
+            <a href="{% url 'message_update' message.pk %}">Edit</a>
+            <a href="{% url 'message_delete' message.pk %}">Delete</a>
+          </p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No comments yet.</p>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
