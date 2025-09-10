@@ -3,25 +3,27 @@
 {% block content %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'call-list.css' %}" />
+<link rel="stylesheet" href="{% static 'call-list.css' %}">
 {% endblock %}
 
-<a href="{% url 'call_create' %}">Create New Call</a>
-{% for call in Call %}
-<div >
-    <h3>Call #{{ call.id }}</h3>
-    <p>Building: {{ call.building }}</p>
-    <p>Lab: {{ call.lab }}</p>
-    <p>Description: {{ call.description }}</p>
-    <p>Created at: {{ call.created_date }} </p>
-    
-    <p>
-        <a href="{% url 'call_detail' call.pk %}">View Details</a>
-        {% if call.user == user or user.role == user.Role.ADMIN %}
-            <a href="{% url 'call_delete' call.pk %}">Delete</a>
-        {% endif %}
-    </p>
-    </div>
-{% endfor %}
+<div class="container">
+  <a class="top-link" href="{% url 'call_create' %}">Create New Call</a>
 
+  {% for call in Call %}
+    <div class="call">
+      <h3>Call #{{ call.id }}</h3>
+      <p>Building: {{ call.building }}</p>
+      <p>Lab: {{ call.lab }}</p>
+      <p>Description: {{ call.description }}</p>
+      <p>Created at: {{ call.created_date }}</p>
+
+      <a href="{% url 'call_detail' call.pk %}">View Details</a>
+      {% if call.user == user or user.role == user.Role.ADMIN %}
+        <a class="delete" href="{% url 'call_delete' call.pk %}">Delete</a>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>No calls yet.</p>
+  {% endfor %}
+</div>
 {% endblock %}

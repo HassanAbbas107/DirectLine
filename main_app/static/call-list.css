@@ -1,0 +1,49 @@
+
+.container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 0 12px;
+  text-align: left;
+}
+
+.top-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: white;
+  color: #222;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.call {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.call h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.call p {
+  margin: 4px 0;
+}
+
+
+.call a {
+  display: inline-block;
+  margin-right: 8px;
+  color: #0b5ed7;
+  text-decoration: none;
+}
+
+
+
+.call a.delete {
+  color: #b00020;
+}
