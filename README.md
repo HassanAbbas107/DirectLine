@@ -16,7 +16,7 @@ The goal of this project is to create a help desk platform that allows users to 
 - JavaScript
 - Git
 - PgAdmin4
--[Some CSS from](https://prismic.io/blog/css-background-effects)
+- [Some CSS from](https://prismic.io/blog/css-background-effects)
 ## Wins and Blockers
 
 **Wins include:**
