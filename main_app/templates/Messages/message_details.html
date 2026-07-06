@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin-top: 40px;">
+  <h2 class="card-title">Comment #{{ message.id }} Details</h2>
+  
+  <div style="text-align: left; margin-bottom: 24px; font-size: 0.95rem; display: flex; flex-direction: column; gap: 12px;">
+    <div>
+      <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Posted By</span>
+      <strong style="color: #fff;">{{ message.user.username }} ({{ message.user.get_role_display }})</strong>
+    </div>
+    
+    <div>
+      <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Associated Ticket</span>
+      <a href="{% url 'call_detail' message.call.id %}" class="link">Ticket #{{ message.call.id }} ({{ message.call.get_status_display }})</a>
+    </div>
+
+    <div>
+      <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Date Posted</span>
+      <span style="color: #e5e7eb;">{{ message.created_date }}</span>
+    </div>
+
+    <div>
+      <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Comment Body</span>
+      <div style="color: #f3f4f6; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px solid var(--glass-border); line-height: 1.6; white-space: pre-wrap;">{{ message.description }}</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 16px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+    <a href="{% url 'call_detail' message.call.id %}" class="btn btn-secondary" style="flex: 1;">Back to Ticket</a>
+    {% if user.role == user.Role.ADMIN or message.user == user %}
+      <a href="{% url 'message_update' message.pk %}" class="btn" style="flex: 1;">Edit Comment</a>
+      <a href="{% url 'message_delete' message.pk %}" class="btn btn-danger" style="flex: 1;">Delete</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

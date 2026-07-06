@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
-{% block content %}
-{% load static %}
-{% block head %}
-<link rel="stylesheet" href="{% static 'call_form.css' %}">
-{% endblock %}
 
-<div class="container">
-  <h1>Create Call for the IT tech team</h1>
+{% block content %}
+<div class="card" style="max-width: 650px;">
+  <h2 class="card-title">Submit Support Ticket</h2>
+  <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem;">
+    Create a call request for the IT tech support team. Provide details about the building, lab, and a description of the issue.
+  </p>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button>Create Call</button>
+    <div style="display: flex; gap: 16px; margin-top: 20px;">
+      <a href="{% url 'call_list' %}" class="btn btn-secondary" style="flex: 1;">Cancel</a>
+      <button type="submit" class="btn" style="flex: 2;">Submit Ticket</button>
+    </div>
   </form>
 </div>
 {% endblock %}

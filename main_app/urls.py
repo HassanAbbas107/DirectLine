@@ -12,6 +12,7 @@ urlpatterns = [
     # Messages
     path("messages/new/<int:pk>/", views.MessageCreateView.as_view(), name="message_create"),
     path("messages/", views.MessageListView.as_view(), name="messages_list"),
+    path("messages/<int:message_id>/", views.MessageDetailView.as_view(), name="message_detail"),
     path("messages/<int:message_id>/update/", views.MessageUpdateView.as_view(), name="message_update"),
     path("messages/<int:pk>/delete/", views.MessageDeleteView.as_view(), name="message_delete"),
     

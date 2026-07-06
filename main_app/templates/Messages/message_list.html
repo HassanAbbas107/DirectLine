@@ -1,28 +1,58 @@
 {% extends 'base.html' %}
-{% block content %}
-{% load static %}
-{% block head %}
-<link rel="stylesheet" href="{% static 'message-list.css' %}">
-{% endblock %}
 
-<div class="container">
+{% block content %}
+<div style="margin-bottom: 30px;">
+  <h1 style="font-size: 2rem; font-weight: 700; color: #fff;">Comments Activity Log</h1>
+  <p style="color: var(--text-muted); font-size: 0.95rem;">Monitor comments and ticket interactions</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
   {% for message in messages %}
-    <div class="message">
-      <h3>Comment {{ message.id }}</h3>
-      <p>Call: <a href="{% url 'call_detail' message.call.pk %}">Call #{{ message.call.id }}</a> ({{ message.call.status }})</p>
-      <p>Admin: {{ message.user.username }}</p>
-      <p>Date: {{ message.created_date }}</p>
-      <p>Comment: {{ message.description }}</p>
-      {% if user.is_authenticated and user.role == user.Role.ADMIN %}
-      <p class="actions">
-        <a href="{% url 'message_detail' message.pk %}">View Details</a>
-        <a href="{% url 'message_update' message.pk %}">Edit</a>
-        <a href="{% url 'message_delete' message.pk %}">Delete</a>
-      </p>
-      {% endif %}
+    <div class="card" style="margin: 0; padding: 24px; max-width: none; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; margin-bottom: 12px;">
+        <span style="font-size: 0.85rem; color: var(--text-muted);">
+          On ticket <a href="{% url 'call_detail' message.call.pk %}" class="link" style="font-weight: 600;">#{{ message.call.id }}</a> 
+          &bull; Status: 
+          <span class="badge {% if message.call.status == 'problem' %}badge-problem{% elif message.call.status == 'working' %}badge-working{% else %}badge-solved{% endif %}">
+            {{ message.call.get_status_display }}
+          </span>
+        </span>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">{{ message.created_date }}</span>
+      </div>
+      
+      <div style="display: flex; align-items: flex-start; gap: 16px;">
+        <!-- Profile Initial -->
+        <div style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem;
+                    {% if message.user.role == 'admin' %}
+                      background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);
+                    {% else %}
+                      background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3);
+                    {% endif %}">
+          {{ message.user.username|slice:":1"|upper }}
+        </div>
+        
+        <div style="flex: 1;">
+          <div style="margin-bottom: 6px;">
+            <strong style="color: #fff; font-size: 0.95rem;">{{ message.user.username }}</strong>
+            <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 4px;">({{ message.user.get_role_display }})</span>
+          </div>
+          <p style="color: #e5e7eb; font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap;">{{ message.description }}</p>
+        </div>
+      </div>
+      
+      <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+        <a href="{% url 'message_detail' message.pk %}" class="link" style="font-size: 0.85rem;">View Details</a>
+        {% if user.role == user.Role.ADMIN or message.user == user %}
+          <a href="{% url 'message_update' message.pk %}" class="link" style="font-size: 0.85rem;">Edit</a>
+          <a href="{% url 'message_delete' message.pk %}" class="link" style="color: var(--status-problem); font-size: 0.85rem;">Delete</a>
+        {% endif %}
+      </div>
     </div>
   {% empty %}
-    <p>No comments yet.</p>
+    <div class="card" style="text-align: center; padding: 48px;">
+      <h3 style="margin-bottom: 8px; color: #fff;">No comments found</h3>
+      <p style="color: var(--text-muted);">Activity history is currently empty.</p>
+    </div>
   {% endfor %}
 </div>
 {% endblock %}
