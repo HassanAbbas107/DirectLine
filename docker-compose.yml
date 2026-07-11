@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: directline_db
+    environment:
+      POSTGRES_DB: directline
+      POSTGRES_USER: directline_user
+      POSTGRES_PASSWORD: directline_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U directline_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: directline_web
+    command: >
+      sh -c "python manage.py migrate &&
+             python -m gunicorn DirectLain.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    environment:
+      DB_ENGINE: django.db.backends.postgresql
+      DB_NAME: directline
+      DB_USER: directline_user
+      DB_PASSWORD: directline_pass
+      DB_HOST: db
+      DB_PORT: "5432"
+      DEBUG: "False"
+      ALLOWED_HOSTS: localhost,127.0.0.1,web
+      SECRET_KEY: "dev-secret-key-change-in-production"
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:

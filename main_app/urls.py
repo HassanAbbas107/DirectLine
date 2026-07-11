@@ -1,8 +1,10 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 
 urlpatterns = [
+    path("", RedirectView.as_view(pattern_name='call_list', permanent=False)),
     # Calls
     path("calls/", views.CallsListView.as_view(), name="call_list"),
     path("calls/new/", views.CallCreateView.as_view(), name="call_create"),

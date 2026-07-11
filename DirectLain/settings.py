@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -23,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*1zoo7u2+lz52!-w)jywl6n^r(o1hw6)i7ouljm+$s^x*t8y(k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition
@@ -37,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main_app' # <---- your app name here
+    'main_app'
 ]
 
 MIDDLEWARE = [
@@ -69,29 +73,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DirectLain.wsgi.application'
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv(BASE_DIR / '.env')
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DirectLin',  # same name as your .env file
-        'USER': 'postgres',
-        'PASSWORD': os.getenv('Pass'),
-        'HOST': 'localhost',  
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'directline'),
+        'USER': os.getenv('DB_USER', 'directline_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'directline_pass'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+
 AUTH_USER_MODEL = "main_app.User"
 
-
-
-LOGIN_REDIRECT_URL = "call_list"       # after successful login
-LOGOUT_REDIRECT_URL = "login"     # after logout
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "call_list"
+LOGOUT_REDIRECT_URL = "login"
 
 
 # Password validation
@@ -128,19 +128,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-
-
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")

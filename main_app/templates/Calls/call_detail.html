@@ -2,7 +2,6 @@
 
 {% block extra_css %}
 <style>
-  /* Chat message wrapper alignment */
   .msg-wrapper {
     display: flex;
     flex-direction: column;
@@ -11,183 +10,173 @@
   .msg-admin { align-items: flex-end; }
   .msg-user  { align-items: flex-start; }
 
-  /* Sender meta row */
   .msg-meta {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
     margin-bottom: 4px;
-    margin-left: 6px;
-    margin-right: 6px;
+    padding: 0 6px;
   }
-  .msg-name-admin { color: #34d399; }
-  .msg-name-user  { color: #a5b4fc; }
+  .msg-name-admin { color: #15803d; font-weight: 600; }
+  .msg-name-user  { color: var(--primary-dark); font-weight: 600; }
 
-  /* Message bubble base */
   .msg-bubble {
-    max-width: 85%;
-    padding: 14px 18px;
-    border-radius: 12px;
-    font-size: 0.95rem;
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
     line-height: 1.5;
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--border);
   }
 
-  /* Admin bubble (green tint, top-right corner sharp) */
   .msg-bubble-admin {
-    background: rgba(16, 185, 129, 0.08);
-    border-color: rgba(16, 185, 129, 0.2);
+    background: var(--success-light);
+    border-color: #bbf7d0;
     border-top-right-radius: 2px;
-    color: #e6fbf3;
+    color: var(--text-dark);
   }
 
-  /* User bubble (indigo tint, top-left corner sharp) */
   .msg-bubble-user {
-    background: rgba(99, 102, 241, 0.08);
-    border-color: rgba(99, 102, 241, 0.2);
+    background: var(--primary-light);
+    border-color: #bfdbfe;
     border-top-left-radius: 2px;
-    color: #f0f2fe;
+    color: var(--text-dark);
   }
 </style>
 {% endblock %}
 
 {% block content %}
-<div style="margin-bottom: 20px;">
-  <a href="{% url 'call_list' %}" class="link" style="font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
+<div style="margin-bottom: 16px;">
+  <a href="{% url 'call_list' %}" class="link" style="font-weight: 500; display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem;">
     &larr; Back to Tickets List
   </a>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; align-items: start; width: 100%;">
-  
-  <!-- Left Side: Ticket Metadata -->
+<div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; align-items: start; width: 100%;">
+
+  <!-- Left: Ticket Info -->
   <div>
-    <div class="card" style="margin: 0; padding: 24px; position: sticky; top: 100px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px;">
-        <h2 style="font-size: 1.35rem; font-weight: 700; color: #fff;">Ticket Info</h2>
+    <div class="card" style="margin: 0; padding: 22px; position: sticky; top: 80px; max-width: none;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 14px;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark);">Ticket Info</h2>
         <span class="badge {% if Call.status == 'problem' %}badge-problem{% elif Call.status == 'working' %}badge-working{% else %}badge-solved{% endif %}">
           {{ Call.get_status_display }}
         </span>
       </div>
 
-      <div style="margin-bottom: 20px; font-size: 0.95rem; display: flex; flex-direction: column; gap: 12px;">
+      <div style="margin-bottom: 16px; font-size: 0.9rem; display: flex; flex-direction: column; gap: 12px;">
         <div>
-          <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Ticket ID</span>
-          <strong style="color: #fff; font-size: 1.1rem;">#{{ Call.id }}</strong>
-        </div>
-        
-        <div>
-          <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Submitted By</span>
-          <span style="color: #e5e7eb;">{{ Call.user.username }} ({{ Call.user.get_role_display }})</span>
+          <span style="color: var(--text-muted); display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Ticket ID</span>
+          <strong style="color: var(--text-dark); font-size: 1.05rem;">#{{ Call.id }}</strong>
         </div>
 
         <div>
-          <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600;">Created Date</span>
-          <span style="color: #e5e7eb;">{{ Call.created_date }}</span>
+          <span style="color: var(--text-muted); display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Submitted By</span>
+          <span style="color: var(--text-body);">{{ Call.user.username }} ({{ Call.user.get_role_display }})</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border);">
+        <div>
+          <span style="color: var(--text-muted); display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Created Date</span>
+          <span style="color: var(--text-body);">{{ Call.created_date }}</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: var(--bg-light); padding: 10px; border-radius: 6px;">
           <div>
-            <span style="color: var(--text-muted); display: block; font-size: 0.75rem; text-transform: uppercase;">Building</span>
-            <strong style="color: #fff;">{{ Call.building }}</strong>
+            <span style="color: var(--text-muted); display: block; font-size: 0.72rem; text-transform: uppercase;">Building</span>
+            <strong style="color: var(--text-dark);">{{ Call.building }}</strong>
           </div>
           <div>
-            <span style="color: var(--text-muted); display: block; font-size: 0.75rem; text-transform: uppercase;">Lab</span>
-            <strong style="color: #fff;">{{ Call.lab }}</strong>
+            <span style="color: var(--text-muted); display: block; font-size: 0.72rem; text-transform: uppercase;">Lab</span>
+            <strong style="color: var(--text-dark);">{{ Call.lab }}</strong>
           </div>
         </div>
 
         <div>
-          <span style="color: var(--text-muted); display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Description</span>
-          <div style="color: #f3f4f6; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); max-height: 250px; overflow-y: auto; white-space: pre-wrap; font-size: 0.95rem; line-height: 1.6;">{{ Call.description }}</div>
+          <span style="color: var(--text-muted); display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Description</span>
+          <div style="color: var(--text-body); background: var(--bg-light); padding: 12px; border-radius: 6px; max-height: 220px; overflow-y: auto; white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6;">{{ Call.description }}</div>
         </div>
       </div>
 
       {% if Call.user == user or user.role == user.Role.ADMIN %}
-      <div style="margin-top: 24px; border-top: 1px solid var(--glass-border); padding-top: 16px;">
-        <a href="{% url 'call_delete' Call.pk %}" class="btn btn-danger" style="padding: 10px; font-size: 0.9rem;">Delete Support Ticket</a>
+      <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 14px;">
+        <a href="{% url 'call_delete' Call.pk %}" class="btn btn-danger" style="padding: 9px; font-size: 0.85rem;">Delete Support Ticket</a>
       </div>
       {% endif %}
     </div>
   </div>
 
-  <!-- Right Side: Discussion/Comments thread -->
-  <div style="display: flex; flex-direction: column; gap: 20px;">
-    
-    <!-- Comment Thread -->
-    <div class="card" style="margin: 0; padding: 24px; max-width: none; min-height: 250px;">
-      <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; color: #fff;">
-        Activity & Comments Thread
+  <!-- Right: Comments Thread -->
+  <div style="display: flex; flex-direction: column; gap: 16px;">
+
+    <div class="card" style="margin: 0; padding: 22px; max-width: none; min-height: 200px;">
+      <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 10px; color: var(--text-dark);">
+        Activity & Comments
       </h3>
-      
-      <div class="chat-thread" style="display: flex; flex-direction: column; gap: 16px;">
+
+      <div style="display: flex; flex-direction: column; gap: 14px;">
         {% if messages %}
           {% for message in messages %}
             <div class="msg-wrapper {% if message.user.role == 'admin' %}msg-admin{% else %}msg-user{% endif %}">
-              
-              <!-- Sender Header info -->
+
               <div class="msg-meta">
                 <strong class="{% if message.user.role == 'admin' %}msg-name-admin{% else %}msg-name-user{% endif %}">
                   {{ message.user.username }}
-                </strong> 
+                </strong>
                 <span>({{ message.user.get_role_display }})</span>
                 <span>&bull;</span>
                 <span>{{ message.created_date }}</span>
               </div>
-              
-              <!-- Message Bubble -->
+
               <div class="msg-bubble {% if message.user.role == 'admin' %}msg-bubble-admin{% else %}msg-bubble-user{% endif %}">
                 <p style="white-space: pre-wrap; text-align: left;">{{ message.description }}</p>
-                
-                <!-- Comment Actions (Edit / Delete) -->
+
                 {% if user.role == user.Role.ADMIN or message.user == user %}
-                  <div style="display: flex; justify-content: flex-end; gap: 12px; font-size: 0.8rem; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px;">
+                  <div style="display: flex; justify-content: flex-end; gap: 10px; font-size: 0.75rem; margin-top: 6px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 5px;">
                     <a href="{% url 'message_update' message.pk %}" class="link" style="font-size: 0.75rem;">Edit</a>
-                    <a href="{% url 'message_delete' message.pk %}" class="link" style="color: var(--status-problem); font-size: 0.75rem;">Delete</a>
+                    <a href="{% url 'message_delete' message.pk %}" class="link" style="color: var(--danger); font-size: 0.75rem;">Delete</a>
                   </div>
                 {% endif %}
               </div>
             </div>
           {% endfor %}
         {% else %}
-          <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
-            <p style="font-size: 0.95rem;">No replies or comments on this call ticket yet.</p>
+          <div style="text-align: center; color: var(--text-muted); padding: 32px 0;">
+            <p style="font-size: 0.9rem;">No comments on this ticket yet.</p>
           </div>
         {% endif %}
       </div>
     </div>
 
-    <!-- Post Comment Card -->
+    <!-- Post Comment -->
     {% if user.is_authenticated %}
-    <div class="card" style="margin: 0; padding: 24px; max-width: none;">
-      <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; color: #fff;">
-        Add a comment / reply
+    <div class="card" style="margin: 0; padding: 22px; max-width: none;">
+      <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 14px; color: var(--text-dark);">
+        Add a Comment
       </h3>
-      <form class="comment-form" method="post" action="{% url 'message_create' pk=Call.id %}">
+      <form method="post" action="{% url 'message_create' pk=Call.id %}">
         {% csrf_token %}
-        
+
         {% if user.role == user.Role.ADMIN %}
-          <!-- Admin Status Update Dropdown -->
-          <div style="margin-bottom: 16px; text-align: left;">
-            <label for="status-selector" style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-bottom: 6px;">
+          <div style="margin-bottom: 14px; text-align: left;">
+            <label for="status-selector" style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin-bottom: 5px;">
               Update Ticket Status
             </label>
-            <select id="status-selector" name="status" style="width: auto; min-width: 200px;">
+            <select id="status-selector" name="status" style="width: auto; min-width: 180px;">
               <option value="problem" {% if Call.status == 'problem' %}selected{% endif %}>Problem</option>
               <option value="working" {% if Call.status == 'working' %}selected{% endif %}>Working on it</option>
               <option value="solved" {% if Call.status == 'solved' %}selected{% endif %}>Solved</option>
             </select>
           </div>
         {% endif %}
-        
-        <div style="margin-bottom: 16px;">
-          <textarea name="description" placeholder="Type your response here..." required style="min-height: 100px;"></textarea>
+
+        <div style="margin-bottom: 14px;">
+          <textarea name="description" placeholder="Type your response here..." required style="min-height: 90px;"></textarea>
         </div>
-        
+
         <div style="display: flex; justify-content: flex-end;">
-          <button class="btn" type="submit" style="width: auto; padding: 10px 24px;">Post Comment</button>
+          <button class="btn" type="submit" style="width: auto; padding: 9px 20px;">Post Comment</button>
         </div>
       </form>
     </div>

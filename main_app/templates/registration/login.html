@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card" style="max-width: 450px; margin-top: 40px;">
-  <h2 class="card-title">Log In</h2>
+<div class="card" style="max-width: 420px; margin-top: 40px;">
+  <h2 class="card-title" style="text-align: center;">Welcome Back</h2>
+  <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">
+    Log in to your DirectLine account
+  </p>
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn" style="margin-top: 10px;">Log in</button>
+    <button type="submit" class="btn" style="margin-top: 12px;">Log in</button>
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
-  <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-muted);">
-    Don’t have an account? <a href="{% url 'signup' %}" class="link">Sign up</a>
+  <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted); text-align: center;">
+    Don't have an account? <a href="{% url 'signup' %}" class="link">Sign up</a>
   </p>
 </div>
 {% endblock %}

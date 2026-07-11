@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card" style="max-width: 650px;">
+<div class="card" style="max-width: 600px;">
   <h2 class="card-title">Submit Support Ticket</h2>
-  <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem;">
+  <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">
     Create a call request for the IT tech support team. Provide details about the building, lab, and a description of the issue.
   </p>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <div style="display: flex; gap: 16px; margin-top: 20px;">
+    <div style="display: flex; gap: 12px; margin-top: 16px;">
       <a href="{% url 'call_list' %}" class="btn btn-secondary" style="flex: 1;">Cancel</a>
       <button type="submit" class="btn" style="flex: 2;">Submit Ticket</button>
     </div>

@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card" style="max-width: 450px; margin-top: 40px;">
-  <h2 class="card-title">Sign Up</h2>
+<div class="card" style="max-width: 420px; margin-top: 40px;">
+  <h2 class="card-title" style="text-align: center;">Create Account</h2>
+  <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">
+    Join DirectLine to submit support tickets
+  </p>
   <form method="post" action="{% url 'signup' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn" style="margin-top: 10px;">Create Account</button>
+    <button type="submit" class="btn" style="margin-top: 12px;">Create Account</button>
   </form>
-  <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-muted);">
+  <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted); text-align: center;">
     Already have an account? <a href="{% url 'login' %}" class="link">Log in</a>
   </p>
 </div>

@@ -1,51 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="dashboard-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;">
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
   <div>
-    <h1 style="font-size: 2rem; font-weight: 700; color: #fff;">Support Tickets</h1>
-    <p style="color: var(--text-muted); font-size: 0.95rem;">Manage and track active support calls</p>
+    <h1 style="font-size: 1.6rem; font-weight: 700; color: var(--text-dark);">Support Tickets</h1>
+    <p style="color: var(--text-muted); font-size: 0.9rem;">Manage and track active support calls</p>
   </div>
-  <a class="btn" href="{% url 'call_create' %}" style="width: auto; padding: 10px 20px; display: inline-flex; align-items: center; gap: 8px;">
-    <span>+</span> Submit New Ticket
+  <a class="btn" href="{% url 'call_create' %}" style="width: auto; padding: 9px 18px; display: inline-flex; align-items: center; gap: 6px;">
+    + Submit New Ticket
   </a>
 </div>
 
-<div class="tickets-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; width: 100%;">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; width: 100%;">
   {% for call in Call %}
-    <div class="card" style="margin: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 24px;">
+    <div class="card" style="margin: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 20px;">
       <div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
-          <span style="font-weight: 700; font-size: 1.1rem; color: #fff;">Ticket #{{ call.id }}</span>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+          <span style="font-weight: 700; font-size: 1rem; color: var(--text-dark);">Ticket #{{ call.id }}</span>
           <span class="badge {% if call.status == 'problem' %}badge-problem{% elif call.status == 'working' %}badge-working{% else %}badge-solved{% endif %}">
             {{ call.get_status_display }}
           </span>
         </div>
-        
-        <div style="font-size: 0.9rem; color: var(--text-muted); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; background: rgba(255,255,255,0.02); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+
+        <div style="font-size: 0.85rem; color: var(--text-muted); display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; background: var(--bg-light); padding: 8px 12px; border-radius: 6px;">
           <div><strong>Building:</strong> {{ call.building }}</div>
           <div><strong>Lab:</strong> {{ call.lab }}</div>
         </div>
 
-        <p style="font-size: 0.95rem; color: #e5e7eb; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 4.5em; line-height: 1.5;">
+        <p style="font-size: 0.9rem; color: var(--text-body); margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 4.3em; line-height: 1.45;">
           {{ call.description }}
         </p>
       </div>
 
-      <div style="border-top: 1px solid var(--glass-border); padding-top: 14px; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
-        <span>Submitted: {{ call.created_date }}</span>
-        <div style="display: flex; gap: 12px; align-items: center;">
+      <div style="border-top: 1px solid var(--border); padding-top: 12px; margin-top: 8px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+        <span>{{ call.created_date }}</span>
+        <div style="display: flex; gap: 10px; align-items: center;">
           {% if call.user == user or user.role == user.Role.ADMIN %}
-            <a href="{% url 'call_delete' call.pk %}" class="link" style="color: var(--status-problem); font-weight: 600;">Delete</a>
+            <a href="{% url 'call_delete' call.pk %}" class="link" style="color: var(--danger); font-weight: 600; font-size: 0.8rem;">Delete</a>
           {% endif %}
-          <a href="{% url 'call_detail' call.pk %}" class="btn" style="width: auto; padding: 6px 14px; font-size: 0.85rem; border-radius: 6px;">Details &rarr;</a>
+          <a href="{% url 'call_detail' call.pk %}" class="btn" style="width: auto; padding: 5px 12px; font-size: 0.8rem; border-radius: 6px;">Details &rarr;</a>
         </div>
       </div>
     </div>
   {% empty %}
     <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 48px;">
-      <h3 style="margin-bottom: 8px; color: #fff;">No tickets found</h3>
-      <p style="color: var(--text-muted); margin-bottom: 20px;">You don't have any support calls logged at the moment.</p>
+      <h3 style="margin-bottom: 8px; color: var(--text-dark);">No tickets found</h3>
+      <p style="color: var(--text-muted); margin-bottom: 16px;">You don't have any support calls logged yet.</p>
       <a href="{% url 'call_create' %}" class="btn" style="width: auto; display: inline-block;">Submit your first ticket</a>
     </div>
   {% endfor %}
