@@ -19,11 +19,6 @@ services:
   web:
     build: .
     container_name: directline_web
-    command: >
-      sh -c "python manage.py migrate &&
-             python -m gunicorn DirectLain.wsgi:application --bind 0.0.0.0:8000"
-    ports:
-      - "8000:8000"
     environment:
       DB_ENGINE: django.db.backends.postgresql
       DB_NAME: directline
@@ -34,6 +29,8 @@ services:
       DEBUG: "False"
       ALLOWED_HOSTS: localhost,127.0.0.1,web
       SECRET_KEY: "dev-secret-key-change-in-production"
+    ports:
+      - "8000:8000"
     volumes:
       - .:/app
     depends_on:
@@ -41,6 +38,12 @@ services:
         condition: service_healthy
     stdin_open: true
     tty: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 volumes:
   postgres_data:

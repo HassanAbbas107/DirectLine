@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.db import connection
 from .models import Call, Message
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import get_user_model
@@ -141,3 +144,20 @@ class MessageUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse('call_detail', kwargs={'call_id': self.object.call.id})
 
+@require_http_methods(["GET"])
+def healthcheck(request):
+    """Healthcheck endpoint for monitoring. Returns 200 if DB is connected."""
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        return JsonResponse({
+            "status": "healthy",
+            "service": "directline-api",
+            "database": "connected"
+        })
+    except Exception as e:
+        return JsonResponse({
+            "status": "unhealthy",
+            "service": "directline-api",
+            "error": str(e)
+        }, status=503)
